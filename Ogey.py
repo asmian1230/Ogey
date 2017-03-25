@@ -32,6 +32,9 @@ class Camera(object):
 pygame.init()
 screen = pygame.display.set_mode(SCREEN_SIZE, FULLSCREEN, 32)
 screen_rect = screen.get_rect()
+background = pygame.image.load("L1/background.png").convert_alpha()
+background_rect = background.get_rect()
+
 
 FPS = 60
 clock = pygame.time.Clock()
@@ -70,4 +73,18 @@ while True:
             left = False
         if event.type == KEYUP and event.key == K_RIGHT:
             right = False
-        
+
+    asize = ((screen_rect.w // background_rect.w + 1) * background_rect.w, (screen_rect.h // background_rect.h + 1) * background_rect.h)
+    bg = pygame.Surface(asize)
+
+    for x in range(0, asize[0], background_rect.w):
+        for y in range(0, asize[1], background_rect.h):
+            screen.blit(background, (x, y))
+
+    time_spent = tps(clock, FPS)
+    camera.draw_sprites(screen, all_sprite)
+
+    player.update(up, down, left, right)
+    collectible.update()
+    camera.update()
+    pygame.display.flip()
