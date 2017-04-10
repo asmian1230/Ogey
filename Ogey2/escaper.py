@@ -6,6 +6,7 @@
 import pygame
 from pygame.locals import *
 import sys
+import pygame.mixer
 
 SCREEN_SIZE = (1248, 702)   #resolution of the game
 global HORIZ_MOV_INCR
@@ -251,6 +252,11 @@ def tps(orologio,fps):
 
 
 pygame.init()
+pygame.mixer.init()
+
+music = 'ogey.mid'
+pygame.mixer.music.load(music)
+
 screen = pygame.display.set_mode(SCREEN_SIZE)
 screen_rect = screen.get_rect()
 background = pygame.image.load("world/lvl222.png").convert_alpha()
@@ -270,6 +276,7 @@ clock = pygame.time.Clock()
 up = down = left = right = False
 x, y = 0, 0
 while True:
+    pygame.mixer.music.play()
 
     for event in pygame.event.get():
         if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
