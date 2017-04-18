@@ -74,7 +74,6 @@ class Player(pygame.sprite.Sprite):
                 if pygame.sprite.spritecollideany(ogey,object_list)!=None:
                     self.rect.x+=3
         if keys[pygame.K_RIGHT]:
-            print self.rect.x
             if self.rect.x <776:
                 if self.rect.x >388:
                     Background.shift_world(-3)
