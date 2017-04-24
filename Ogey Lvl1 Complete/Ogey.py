@@ -203,7 +203,7 @@ def game():
     platform33 = Object('Platform3.png',350,890)
     platform34 = Object('Platform3.png',0,2675)
     platform35 = Object('Platform2.png',650,2770)
-    lily = Object('Lily.png',0,2635)
+    lily = Object('Lily.png',700,2735)
 
     spikes1 = Object('Spikes2.png',125,350)
     spikes2 = Object('Spikes2.png',280,350)
