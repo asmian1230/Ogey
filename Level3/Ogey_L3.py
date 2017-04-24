@@ -104,8 +104,8 @@ class Player(pygame.sprite.Sprite):
         
         if self.rect.y >= 350:
             self.rect.y =300
-        if self.rect.x >= 300:
-            self.rect.x =260
+       # if self.rect.x >= 300:
+        #    self.rect.x =260
         else :
             background.shift_world(-self.vely)
             if self.rect.y<370:
@@ -144,19 +144,25 @@ class Lily(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load('Lily.png')
         self.rect = self.image.get_rect()
-        self.rect.x = 700
-        self.rect.y = 200
+        self.rect.x = 750
+        self.rect.y = 0
         
         
 
 pygame.init()
 pygame.mixer.init()
+pygame.mixer.music.load("Ogey_fights_Paul.mid")
+pygame.mixer.music.play(-1)
  
 gameover= False
 screen_width = 800
 screen_height = 400
 screen = pygame.display.set_mode([screen_width, screen_height])
 screen.fill([255,255,255])
+font = pygame.font.SysFont(None, 25) 
+def message_to_screen(msg, color):
+    screen_text = font.render(msg, True, color)
+    screen.blit(screen_text, [100, 400/2])
 def game():
    
     lily = Lily()
@@ -202,7 +208,14 @@ def game():
         player1.update(Object_list,player1,background)
         boss.update(Object_list)
         bullet.update(Object_list)
-        bullet_list.remove(bullet)
+        if player1.rect.x >= 700 :
+        #if pygame.sprite.collide_rect(player1,Lily):
+            gameover = True
+            done = True
+            
+        if player1.rect.x >= 400 & player1.rect.y <= 150 & boss.rect.y <= 100 :
+            gameOver = True
+           
         screen.fill([255,255,255])
         screen.blit(background.image,background.rect)
         all_sprites_list.draw(screen)
@@ -212,4 +225,5 @@ def game():
         clock.tick(60)
 if not gameover:
     game()
+message_to_screen("You Win", GREEN)
 pygame.quit()
