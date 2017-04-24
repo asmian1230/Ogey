@@ -59,7 +59,7 @@ class Bullet(pygame.sprite.Sprite):
         self.rect.y
         
     def update(self,Object_list):
-        self.rect.x += 1
+        self.rect.x += 20
  
  
 class Player(pygame.sprite.Sprite):
@@ -163,10 +163,10 @@ def game():
 
     player1 = Player(screen)
     boss = Boss()
-    
+    bullet = Bullet()
     all_sprites_list.add(boss)
     all_sprites_list.add(player1)
-    
+    all_sprites_list.add(bullet)
     background = Background(all_sprites_list)
     background.draw(screen)
 
@@ -183,15 +183,15 @@ def game():
             keys = pygame.key.get_pressed()
             if keys[pygame.K_SPACE]:
                 bullet = Bullet()
-                bullet.rect.x = player1.rect.x
-                bullet.rect.y = player1.rect.y
+                bullet.rect.x = player1.rect.x + 120
+                bullet.rect.y = player1.rect.y + 60
                 all_sprites_list.add(bullet)
                 bullet_list.add(bullet)
-                bullet.update(bullet_list)
+                
         
         player1.update(Object_list,player1,background)
         boss.update(Object_list)
-        
+        bullet.update(Object_list)
         screen.fill([255,255,255])
         screen.blit(background.image,background.rect)
         all_sprites_list.draw(screen)
