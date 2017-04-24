@@ -47,6 +47,19 @@ class Object(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
 
+
+        
+class Bullet(pygame.sprite.Sprite):
+    def __init__(self):
+        
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load('Bullet.png')
+        self.rect = self.image.get_rect()
+        self.rect.x
+        self.rect.y
+        
+    def update(self,Object_list):
+        self.rect.x += 1
  
  
 class Player(pygame.sprite.Sprite):
@@ -88,6 +101,7 @@ class Player(pygame.sprite.Sprite):
                     self.rect.y -= 9
         if keys[pygame.K_DOWN]:
                 self.rect.y+=9
+        
         if self.rect.y <170:
             if self.rect.y >1:
                 self.rect.y+=self.vely
@@ -105,16 +119,7 @@ class Player(pygame.sprite.Sprite):
                             self.jump+=1
                     self.vely=0
 
-class Bullet(pygame.sprite.Sprite):
-    def __init__(self,screen):
-        self.screen = screen
-        pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load('Bullet.png')
-        self.rect = self.image.get_rect()
-        self.rect.x=10
-        self.rect.y=170
-    def update(self,Object_list):
-        self.x -= 40
+
 class Boss(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
@@ -151,17 +156,17 @@ def game():
 
     all_sprites_list = pygame.sprite.Group()
     Object_list = pygame.sprite.Group()
-
+    bullet_list = pygame.sprite.Group()
 
 
     
 
     player1 = Player(screen)
     boss = Boss()
-    bullet = Bullet(screen)
+    
     all_sprites_list.add(boss)
     all_sprites_list.add(player1)
-    all_sprites_list.add(bullet)
+    
     background = Background(all_sprites_list)
     background.draw(screen)
 
@@ -176,6 +181,14 @@ def game():
                 gameover = True
                 done = True
             keys = pygame.key.get_pressed()
+            if keys[pygame.K_SPACE]:
+                bullet = Bullet()
+                bullet.rect.x = player1.rect.x
+                bullet.rect.y = player1.rect.y
+                all_sprites_list.add(bullet)
+                bullet_list.add(bullet)
+                bullet.update(bullet_list)
+        
         player1.update(Object_list,player1,background)
         boss.update(Object_list)
         
