@@ -96,12 +96,7 @@ class Player(pygame.sprite.Sprite):
                     self.rect.x+=5
                 if pygame.sprite.spritecollideany(ogey,object_list)!=None:
                     self.rect.x -=5
-        if keys[pygame.K_UP]:
-            if self.rect.y > 6:
-                    if self.jump>0:
-                        self.vely-=9
-                        self.jump-=1
-        if keys[pygame.K_SPACE]:
+        if keys[pygame.K_UP] or keys[pygame.K_SPACE]:
             if self.rect.y > 6:
                     if self.jump>0:
                         self.vely-=9
@@ -155,8 +150,8 @@ class Parachute(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load('Parachute.png')
         self.rect = self.image.get_rect()
-        self.rect.x =575
-        self.rect.y = 1525
+        self.rect.x = 600
+        self.rect.y = 1450
 pygame.init()
 pygame.mixer.init()
 pygame.mixer.music.load("Ogey falls in love.mid")

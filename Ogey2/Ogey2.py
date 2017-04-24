@@ -333,7 +333,7 @@ world = level.world
 escaper = level.escaper
 pygame.mouse.set_visible(0)
 
-filename= 'C:\Python27\Ogey2\ogey.mid'
+filename= 'ogey.mid'
 pygame.mixer.music.load(filename)
 pygame.mixer.music.play(loops=100, start=0.0)
 
