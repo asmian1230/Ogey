@@ -101,6 +101,11 @@ class Player(pygame.sprite.Sprite):
                     if self.jump>0:
                         self.vely-=9
                         self.jump-=1
+        if keys[pygame.K_SPACE]:
+            if self.rect.y > 6:
+                    if self.jump>0:
+                        self.vely-=9
+                        self.jump-=1
         if keys[pygame.K_DOWN]:
                 self.vely+=1
         if self.rect.y <170:
