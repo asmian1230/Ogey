@@ -68,6 +68,13 @@ class Player(pygame.sprite.Sprite):
             self.rect.y-=5
             return True
         self.rect.y-=5
+    def upparachute(self):
+        x = self.rect.x
+        y = self.rect.y
+        self.image = pygame.image.load('Parachute-ogey.png')
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
         
     def update(self,object_list,ogey,background):
         boolean = False
@@ -117,7 +124,7 @@ class Heart(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load('Heart.png')
         self.rect = self.image.get_rect()
-        self.rect.x = 140
+        self.rect.x = 152
         self.rect.y = 575
         self.up = 1
     def update(self,Object_list):
@@ -147,6 +154,8 @@ class Parachute(pygame.sprite.Sprite):
         self.rect.y = 1525
 pygame.init()
 pygame.mixer.init()
+pygame.mixer.music.load("Ogey falls in love.mid")
+pygame.mixer.music.play(-1)
  
 gameover= False
 screen_width = 800
@@ -194,6 +203,7 @@ def game():
     platform33 = Object('Platform3.png',350,890)
     platform34 = Object('Platform3.png',0,2675)
     platform35 = Object('Platform2.png',650,2770)
+    lily = Object('Lily.png',0,2635)
 
     spikes1 = Object('Spikes2.png',125,350)
     spikes2 = Object('Spikes2.png',280,350)
@@ -259,6 +269,7 @@ def game():
     Platform_list.add(platform33)
     Platform_list.add(platform34)
     Platform_list.add(platform35)
+    Platform_list.add(lily)
 
     Spike_list.add(spikes1)
     Spike_list.add(spikes2)
@@ -338,7 +349,9 @@ def game():
         screen.blit(background.image,background.rect)
         all_sprites_list.draw(screen)
         if pygame.sprite.collide_rect(player1,parachute):
+            player1.upparachute()
             player1.parachute=True
+            all_sprites_list.remove(parachute)
         if player1.spike(Spike_list):
             gameover = True
             done = True
