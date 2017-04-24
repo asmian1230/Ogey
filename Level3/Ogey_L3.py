@@ -102,11 +102,10 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_DOWN]:
                 self.rect.y+=9
         
-        if self.rect.y <170:
-            if self.rect.y >1:
-                self.rect.y+=self.vely
-            else :
-                self.rect.y+=1
+        if self.rect.y >= 350:
+            self.rect.y =300
+        if self.rect.x >= 300:
+            self.rect.x =260
         else :
             background.shift_world(-self.vely)
             if self.rect.y<370:
@@ -191,18 +190,19 @@ def game():
                 gameover = True
                 done = True
             keys = pygame.key.get_pressed()
-            if keys[pygame.K_SPACE]:
-                bullet = Bullet()
+            if keys[pygame.K_SPACE ]:
+                bullet = Bullet() 
                 bullet.rect.x = player1.rect.x + 120
                 bullet.rect.y = player1.rect.y + 60
                 all_sprites_list.add(bullet)
                 bullet_list.add(bullet)
+                bullet_list.remove(bullet)
                 
         
         player1.update(Object_list,player1,background)
         boss.update(Object_list)
         bullet.update(Object_list)
-       
+        bullet_list.remove(bullet)
         screen.fill([255,255,255])
         screen.blit(background.image,background.rect)
         all_sprites_list.draw(screen)
