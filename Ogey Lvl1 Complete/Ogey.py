@@ -96,7 +96,12 @@ class Player(pygame.sprite.Sprite):
                     self.rect.x+=5
                 if pygame.sprite.spritecollideany(ogey,object_list)!=None:
                     self.rect.x -=5
-        if keys[pygame.K_UP] or keys[pygame.K_SPACE]:
+        if keys[pygame.K_UP]:
+            if self.rect.y > 6:
+                    if self.jump>0:
+                        self.vely-=9
+                        self.jump-=1
+        if keys[pygame.K_SPACE]:
             if self.rect.y > 6:
                     if self.jump>0:
                         self.vely-=9
@@ -135,6 +140,15 @@ class Heart(pygame.sprite.Sprite):
         if pygame.sprite.spritecollideany(self,Object_list):
             self.up = self.up *-1
 
+class Lily(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load('lily.png')
+        self.rect = self.image.get_rect()
+        self.rect.x = 700
+        self.rect.y = 2735
+        self.up = 1
+
         
 class Flower(pygame.sprite.Sprite):
      def __init__(self,image_name,x,y,num):
@@ -144,13 +158,13 @@ class Flower(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x=x
         self.rect.y=y
- 
+
 class Parachute(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load('Parachute.png')
         self.rect = self.image.get_rect()
-        self.rect.x = 600
+        self.rect.x =600
         self.rect.y = 1450
 pygame.init()
 pygame.mixer.init()
@@ -202,8 +216,7 @@ def game():
     platform32 = Object('Platform3.png',350,785)
     platform33 = Object('Platform3.png',350,890)
     platform34 = Object('Platform3.png',0,2675)
-    platform35 = Object('Platform2.png',650,2770)
-    lily = Object('Lily.png',700,2735)
+    platform35 = Object('Platform2.png',650,2770) 
 
     spikes1 = Object('Spikes2.png',125,350)
     spikes2 = Object('Spikes2.png',280,350)
@@ -269,7 +282,6 @@ def game():
     Platform_list.add(platform33)
     Platform_list.add(platform34)
     Platform_list.add(platform35)
-    Platform_list.add(lily)
 
     Spike_list.add(spikes1)
     Spike_list.add(spikes2)
@@ -320,9 +332,11 @@ def game():
 
     player1 = Player(screen)
     heart = Heart()
+    lily = Lily()
     parachute = Parachute()
     all_sprites_list.add(parachute)
     all_sprites_list.add(heart)
+    all_sprites_list.add(lily)
     all_sprites_list.add(player1)
 
     background = Background(all_sprites_list)
@@ -342,6 +356,10 @@ def game():
         player1.update(Object_list,player1,background)
         heart.update(Object_list)
         if pygame.sprite.collide_rect(player1,heart):
+            gameover = True
+            done = True
+            game()
+        if pygame.sprite.collide_rect(player1,lily):
             gameover = True
             done = True
             game()
