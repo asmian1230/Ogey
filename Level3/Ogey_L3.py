@@ -125,7 +125,7 @@ class Boss(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load('Boss.png')
         self.rect = self.image.get_rect()
-        self.rect.x = 600
+        self.rect.x = 400
         self.rect.y = 200
         self.up = 1
     def update(self,Object_list):
@@ -139,7 +139,15 @@ class Boss(pygame.sprite.Sprite):
             self.rect.y +=3
         if pygame.sprite.spritecollideany(self,Object_list):
             self.up = self.up *-1
-
+            
+class Lily(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load('Lily.png')
+        self.rect = self.image.get_rect()
+        self.rect.x = 700
+        self.rect.y = 200
+        
         
 
 pygame.init()
@@ -152,7 +160,7 @@ screen = pygame.display.set_mode([screen_width, screen_height])
 screen.fill([255,255,255])
 def game():
    
-
+    lily = Lily()
 
     all_sprites_list = pygame.sprite.Group()
     Object_list = pygame.sprite.Group()
@@ -164,11 +172,13 @@ def game():
     player1 = Player(screen)
     boss = Boss()
     bullet = Bullet()
+    all_sprites_list.add(lily)
     all_sprites_list.add(boss)
     all_sprites_list.add(player1)
     all_sprites_list.add(bullet)
     background = Background(all_sprites_list)
     background.draw(screen)
+    counter = 0
 
     done = False
     clock = pygame.time.Clock()
@@ -192,6 +202,7 @@ def game():
         player1.update(Object_list,player1,background)
         boss.update(Object_list)
         bullet.update(Object_list)
+       
         screen.fill([255,255,255])
         screen.blit(background.image,background.rect)
         all_sprites_list.draw(screen)
